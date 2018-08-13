@@ -1,0 +1,53 @@
+/* My CSS */
+body{
+    background-color: rgb(255, 255, 255);
+}
+.jumbotron{
+    border-radius: 30px;
+    background-color: rgb(229, 235, 235)
+}
+input[type="text"]{
+    background-color: rgb(232, 235, 233);
+    margin-top: 30px;
+    border-radius: 30px;
+    outline-color: wheat; 
+    font-size: 20px;
+    color: #0f0f0f; 
+}
+a .btn, .btn-primary{
+    margin-top: 10px 0px 10px 0px;
+    border-radius: 25px;
+}
+a .btn, .btn-default{
+    padding: 15px 20px 0px 20px;
+}
+.well .plot{
+    padding: 25px;
+    color: black; 
+}
+.row .movie-title{
+    padding: 18px 0px 12px 0px;
+}
+img{
+    border-radius: 30px;
+    box-shadow: 8px 5px 10px  rgba(0, 0, 0, 0.418);
+}
+.list-group{
+    box-shadow:  10px 10px 10px rgba(0, 0, 0, 0.233);
+    color: black;
+    font-weight: 600;
+}
+#movies img, #movie img{
+    width:100%;
+  }
+  
+@media(min-width:960px){
+    #movies .col-md-3 .well{
+      height: 390px;
+    }
+  
+    #movies .col-md-3 img{
+      height:200px;
+      width: 150px;
+    }
+}
