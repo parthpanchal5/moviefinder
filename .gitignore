@@ -1,0 +1,11 @@
+# Claude Code local files
+.claude/
+
+# Dependencies (only present during icon generation)
+node_modules/
+package.json
+package-lock.json
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
