@@ -1,5 +1,5 @@
 // Movie Finder service worker — offline app shell + runtime caching.
-const VERSION = "v6";
+const VERSION = "v8";
 const SHELL_CACHE = `mf-shell-${VERSION}`;
 const RUNTIME_CACHE = `mf-runtime-${VERSION}`;
 
@@ -7,8 +7,8 @@ const RUNTIME_CACHE = `mf-runtime-${VERSION}`;
 const SHELL = [
   "./",
   "./index.html",
-  "./style.css?v=6",
-  "./main.js?v=6",
+  "./style.css?v=8",
+  "./main.js?v=8",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",

@@ -542,27 +542,60 @@ function renderDetail(m) {
     .join("");
 
   const imdbUrl = "https://www.imdb.com/title/" + encodeURIComponent(m.imdbID);
+  const poster = posterFor(m);
 
   el.modalBody.innerHTML = `
-    <div class="detail__hero">
-      <img class="detail__poster" src="${esc(posterFor(m))}" data-fb="${esc(posterFallback(m.Title))}" alt="${esc(m.Title)} poster" />
-      <div class="detail__meta">
-        <h2 class="detail__title" id="modalTitle">${esc(m.Title)}</h2>
-        <div class="detail__tags">
-          ${m.Year && m.Year !== "N/A" ? `<span class="tag">${esc(m.Year)}</span>` : ""}
-          ${m.Rated && m.Rated !== "N/A" ? `<span class="tag">${esc(m.Rated)}</span>` : ""}
-          ${m.Runtime && m.Runtime !== "N/A" ? `<span class="tag">${esc(m.Runtime)}</span>` : ""}
-          ${m.imdbRating && m.imdbRating !== "N/A" ? `<span class="tag tag--rating">★ ${esc(m.imdbRating)} IMDb</span>` : ""}
+    <article class="detail">
+      <div class="detail__bg"></div>
+      <div class="detail__hero">
+        <div class="detail__head">
+          <h2 class="detail__title sr" id="modalTitle">${esc(m.Title)}</h2>
+          <div class="detail__tags sr">
+            ${m.Year && m.Year !== "N/A" ? `<span class="tag">${esc(m.Year)}</span>` : ""}
+            ${m.Rated && m.Rated !== "N/A" ? `<span class="tag">${esc(m.Rated)}</span>` : ""}
+            ${m.Runtime && m.Runtime !== "N/A" ? `<span class="tag">${esc(m.Runtime)}</span>` : ""}
+            ${m.imdbRating && m.imdbRating !== "N/A" ? `<span class="tag tag--rating">★ ${esc(m.imdbRating)} IMDb</span>` : ""}
+          </div>
+          ${genres ? `<div class="detail__genres sr">${genres}</div>` : ""}
         </div>
-        <div class="detail__genres">${genres}</div>
-        <p class="detail__plot">${esc(m.Plot && m.Plot !== "N/A" ? m.Plot : "No plot available.")}</p>
-        <ul class="detail__facts">${facts}</ul>
       </div>
-    </div>
-    <div class="detail__actions">
-      <a class="btn btn--primary" href="${esc(imdbUrl)}" target="_blank" rel="noopener noreferrer">▶ View on IMDb</a>
-      <button class="btn btn--ghost" data-close>Close</button>
-    </div>`;
+      <div class="detail__sheet">
+        <p class="detail__plot sr">${esc(m.Plot && m.Plot !== "N/A" ? m.Plot : "No plot available.")}</p>
+        <ul class="detail__facts sr">${facts}</ul>
+        <div class="detail__actions sr">
+          <a class="btn btn--primary" href="${esc(imdbUrl)}" target="_blank" rel="noopener noreferrer">▶ View on IMDb</a>
+          <button class="btn btn--ghost" data-close>Close</button>
+        </div>
+      </div>
+    </article>`;
+
+  // set poster background via JS (safe for data: URI fallbacks)
+  const detail = el.modalBody.querySelector(".detail");
+  detail.style.setProperty("--poster", `url("${poster}")`);
+
+  setupScrollReveal();
+}
+
+// soft fade-in of detail sections as they scroll into view
+function setupScrollReveal() {
+  const root = el.modal.querySelector(".modal__card");
+  const items = [...el.modalBody.querySelectorAll(".sr")];
+  if (root) root.scrollTop = 0;
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { root, threshold: 0.12 }
+  );
+  items.forEach((it, i) => {
+    it.style.transitionDelay = `${Math.min(i, 6) * 70}ms`;
+    io.observe(it);
+  });
 }
 
 function closeModal() {
