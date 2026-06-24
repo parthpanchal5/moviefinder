@@ -1,5 +1,5 @@
 // Movie Finder service worker — offline app shell + runtime caching.
-const VERSION = "v8";
+const VERSION = "v9";
 const SHELL_CACHE = `mf-shell-${VERSION}`;
 const RUNTIME_CACHE = `mf-runtime-${VERSION}`;
 

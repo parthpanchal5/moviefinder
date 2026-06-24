@@ -691,11 +691,16 @@ body.searching .row { display: none; }
   width: 100%;
   max-height: 90vh;
   overflow: hidden auto;
+  overscroll-behavior: contain;
+  /* keep the card scrollable but hide the visible scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   box-shadow: var(--shadow);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transform: scale(0.94) translateY(12px);
   transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+.modal__card::-webkit-scrollbar { width: 0; height: 0; display: none; }
 .modal.open .modal__card { transform: scale(1) translateY(0); }
 .modal__close {
   position: absolute;
@@ -719,6 +724,8 @@ body.searching .row { display: none; }
 .detail {
   position: relative;
   isolation: isolate;
+  /* clip the scaled ambient background so it can't create phantom scroll space */
+  overflow: hidden;
 }
 /* ambient blurred poster fills the whole card */
 .detail__bg {
